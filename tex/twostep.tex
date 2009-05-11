@@ -1,0 +1,462 @@
+% \documentclass[12pt,fleqn]{article}
+% \usepackage[pdftex]{graphics,color}
+% \usepackage{graphicx}
+% \usepackage{geometry}
+% \usepackage{subfigure}
+% \usepackage{color}
+% \usepackage{alltt}
+% \usepackage{pdfsync}
+% \usepackage[T1]{fontenc}
+% \usepackage{lmodern}
+% \usepackage{garamond}
+
+
+% \usepackage{palatino}
+
+% %%\usepackage[markers,nolists]{endfloat}
+
+
+% %%FIX: Wooldridge citation
+
+% \definecolor{bgcolor}{rgb}{1,1,1}
+
+% \usepackage{listings}
+% \usepackage{relsize}
+
+% \usepackage{comment}
+
+% \usepackage{rotating}
+% \usepackage[md,it,sl]{titlesec}
+% \usepackage{pxfonts}
+% \usepackage[applemac]{inputenc}
+% \usepackage{setspace, fullpage}
+% \usepackage{natbib}
+% \usepackage{geometry}
+
+% \bibliographystyle{apsr}
+
+% \begin{document}
+
+
+%\garamond
+
+% \singlespace
+
+% \begin{titlepage}
+% % Title Page
+%   \title{Analyzing Multiple Surveys: Results from Monte Carlo Experiments}
+
+% \bigskip
+
+% % \author{Eduardo L. Leoni \\Department of Political Science, Columbia University   \\
+% % 7th Floor, International Affairs Bldg. \\
+% % 420 W. 118th Street \\
+% % New York, NY 10027 \\
+% % %% Mail Code 3320 \\
+% % email: ell2002@columbia.edu}
+% \date{}
+
+% \maketitle \thispagestyle{empty}
+
+
+% \bigskip
+% \bigskip
+% \abstract{In the Political Analysis ``Special Issue on Multilevel Modeling of Large Clusters'' (Autumn 2005) several papers discuss the adoption of two-step models to analyze data from multiple surveys. Complementing that issue, in this paper I perform Monte Carlo experiments comparing the two-step logit model's  performance to  maximum likelihood, Bayesian and pooled estimation using cluster standard errors. I find that at low levels of residual variation across groups, pooling the data is the most efficient method, but even cluster standard errors provide incorrect coverage. I show that Jack-Knife estimation can overcome this limitation. When the level of residual variation is moderate or high, the random effects estimators (two-step, ML or Bayesian) outperform pooled estimation both in efficiency and quality of the inferences. I also find that pooled estimation is less robust to violations of the random effects assumptions. The two-step approach is somewhat less efficient than alternate approaches but has two  advantages: it is computationally simpler and easier to extend to new models. I show this by replicating a study with data from multiple surveys in with an ordered dependent variable. I conclude by briefly discussing the advantages and limitations of the different methods.
+% }
+
+% \end{titlepage}
+
+
+
+% %\setcounter{page}{0}
+% \doublespace
+
+% \newpage
+
+
+\section{Introduction}
+
+The increasing availability of cross-country and repeated cross-sections survey data sets has sparked political scientists' interest in what the appropriate strategies are to analyze them. The situation of interest is as follows. The researcher has at hand a data set with several hundreds of individual observations in each group/survey, and is mainly interested in the relationship between survey level covariates, or ``context'', and individual level behavior.  Survey level covariates might have a direct  or indirect (through interactions) effect on the individual-level dependent variable. There are at least three characteristics of this problem that demand careful attention. The first is the correlation in the errors introduced by the grouped nature of the data. In this paper, I discuss at length the assumptions that have to be made about the error term in these models, showing why it is important to take into account their group level components. A second feature is the usually small number of observed groups (e.g. countries) but several hundreds of individual level observations within each group. A third characteristic is the qualitative nature of the dependent variable.
+
+In a special issue of \textit{Political Analysis} dedicated to the multilevel analysis of large clusters survey data, most authors advocated variants of a two-step strategy. In the first step, they estimate separate regression models for each survey including only variables that vary within survey as regressors. In the second step, using a variety of weighting schemes, they estimate regression models where the dependent variables are the estimated parameters in the first step. At this stage, variables that vary across surveys are used as independent variables.
+
+\citet{franzese:2005} and \citet{beck:2005}, in the same issue, argue that there are no clear advantages  in applying the two-step strategy over ``one step'' estimation methods such as pooled regression with cluster robust standard errors or maximum likelihood random effects estimation. In this paper, I show that the pooled estimator can be severely more biased and inefficient than the random effects estimators when the random effects assumptions are violated. As importantly, I  show that clustered standard errors are insufficient to deal with the clustering when the number of  clusters is small and the number of observations in each cluster is large, even under the random effects assumptions. I also show that inferences from the two-step model are more stable than the maximum likelihood and Bayesian estimators, working well even with a small number of groups. Finally, using a reanalysis of a ordered logit application, I show that two-step estimation is a valuable tool when alternative estimators are not readily available.
+
+This paper proceeds as follows. I first discuss the mixed model (also known as random coefficient or  multilevel model) assumptions for the binary logit case.  I then show the results of Monte Carlo experiments of logit models that suggests the following: a) when the true level of residual variation at the group level is small, a pooled strategy is the most efficient; b) unfortunately, the regular standard errors, and even the clustered robust standard errors, are too small, leading to rejection rates much lower than the nominal level rate.  As an alternative, I suggest a Jack-Knife estimator of the standard error, which performs quite well under these circumstances and is computationally fast and simple to implement.
+
+I compare the results from pooled estimation with three methods of random effects estimation: maximum likelihood (ML),  Bayesian posterior simulation and Feasible Generalized Least Squares (FGLS). As expected, the ML and the Bayesian  estimators turn out to be the most efficient. The FGLS (or two-step) estimator proposed by \citet{hanushek:1974} is the least efficient when the group level residual variation is close to zero, but  the penalty is modest.
+
+In the next set of experiments the random effects assumptions are violated by introducing correlation between the group level error terms and the individual level covariate. I show that this correlations affects the pooled estimators much more than the random effects estimators. Not only is the pooled estimator much less efficient and more biased, but the inferences made are incorrect (that is, the standard errors are severely underestimated) even when Jack-Knife standard errors are used.
+
+The overall message is clear. The pooled estimator is uniformly worse than all random effects estimators as long as there is some group-level residual variation. The inefficiency and reliability of inferences are particularly troublesome if there is correlation between individual level variable and the group level error term.  Among the random effects estimators there are more similarities than differences, so the choice of estimator can be left to be more a matter of convenience and personal preferences than anything else.
+
+In the next section I apply some of these methods to an actual data set. The substantive area is the research on happiness from the economics perspective.  I show that  \citet{Blanchflower:2004} ignored the clustered nature of the data, leading to overly optimistic standard errors. I  demonstrate how the two-step approach easily extends to the ordered logit case required by this application.
+
+In the final section I summarize the results and give some practical recommendations for analyzing  data from multiple surveys.
+
+\section{Estimation of a binary dependent variable model with clustering}
+
+Let $y^*$ be the unobservable utility differential between two alternatives.  Instead of $y^*$ we  observe $y$, which equals 1 if $y^*$ is positive and 0 if it is negative. We model $y^*$ as a function of an explanatory variable ($x$) that varies within groups and another ($z$) that varies only across groups:
+
+ \begin{eqnarray}
+  y^*_{ij}&=&\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}
+\cdot z_s+v_{ij}\\
+v_{ij}&=&\varepsilon_{ij}+u_{0j}+u_{1j}\cdot x_{ij}
+\label{eq:logit}
+\end{eqnarray}
+
+
+\subsection{Complete pooling}
+
+If $\varepsilon_{ij}$ follows a logistic distribution we will have:
+
+\begin{equation}
+P(y_{ij}=1)=logit^{-1}(\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij} \cdot z_s)
+\end{equation}
+
+We can estimate this model by maximum likelihood. The obvious problem is that we are assuming that observations are independent within groups, i.e. that both $\mathbf{u_{0}}$ and $\mathbf{u_{1}}$ are zero. This may lead to serious underestimation of the standard errors \citep{moulton:1990}.
+
+\subsubsection{Logit with cluster standard errors}
+
+One possibility is to calculate standard errors that are robust to heteroskedasticity. One can calculate robust standard errors when the data is drawn from clusters (which I have been referring to as groups) as described in \citep{wooldridge:2003}. Clustered standard errors, however, were designed to handle data structures with many groups and a relatively small number of observations in each group. Although small $J$ corrections have been proposed for the generalized equations framework \citep{murray:2004}, I am not aware of such corrections in the \textit{vanilla} [why italics?] logit/probit case.
+
+
+A similar problem occurs in the linear regression case when one uses the ``regular'' robust standard errors, i.e., heteroskedasticity consistent standard errors with no correction for small samples.  In the  linear regression case \citet{long:2000} recommend using a different robust standard error formula, known as \emph{HC3}, whenever the sample size is below 500.  The \emph{HC3} estimator was created as an approximation to a Jack-Knife estimator analyzed by \citet{mackinnon:1985}, but unfortunately no such approximations exist for the clustered standard error case.
+
+The obvious alternative is to estimate the Jack-Knife numerically. In the cluster case one estimates the model with all groups and then perform $J$ replications deleting one cluster (group) each time. That is, in each iteration calculate:
+
+\begin{equation}
+  \label{eq:jack}
+  jack_{01}^c=J\cdot\hat{\gamma}_{01}-(J-1)\cdot\tilde\gamma^{j}_{01}
+\end{equation}
+
+where $\hat{\gamma}_{01}$ denotes the estimate from the full model, and $\tilde\gamma_{01}^{j}$ denotes the estimate of the model with group $j$ deleted. Then,
+
+\begin{equation}
+  \label{eq:jack2}
+  \frac{V(\mathbf{jack_{01}})}{J}
+\end{equation}
+
+serves as the Jack-Knife estimator of the standard error of $\hat\gamma_{01}$. As always, a parallel calculation is done for $\gamma_{11}$ (or any other parameter of interest).
+
+\subsection{Dummy variables logit}
+\label{sec:dummy-variables-logit}
+
+In the panel data case (small $T$, large $J$), directly estimating the unobserved effects $u_0$ and $u_1$ by including dummy variables leads to inconsistency as $J \to \infty$ due to the incidental parameters problem. That is, with each additional group $j$ there is also  a new $u_0$ to estimate (and, if variation in the $\beta_1$ coefficients is allowed, $u_1$). On the other hand, Monte Carlo experiments by \citet{heckman:1981} and \citet{katz:2001} show that this is not an acute problem with $T$ larger than 20.
+
+With $N/J \to \infty $ (i.e. as the group sizes tend to infinity), standard asymptotic results of maximum likelihood estimators can be applied separately for each group. However, it is not possible to obtain direct estimates of the parameters of interest $\gamma_{01}$ and $\gamma_{11}$.
+
+\begin{equation}
+  \label{eq:logit.group}
+  P(y_{ij}=1)=logit^{-1}(\beta_{0j}+\beta_{1j} x_{ij})
+\end{equation}
+
+
+
+\subsection{Random effects logit}
+
+If one assumes that the group level unobserved effects $u_{0}$ and $u_{1}$ follow a multivariate normal distribution $N(0,\sigma)$ independent of $e_{ij}$, one can estimate a random effects logit model.  Estimating this likelihood is difficult due to the need to integrate out  the group level error terms.
+
+For logit models with random intercepts (i.e. ``random effects logit'') in Stata, this is done through Gauss-Hermite quadrature, which is a bad approximation if the number of observations in each group is large and/or $\frac{\sigma^2}{1+\sigma^2}$ is large. From the manual \citep[p.139]{statacorp:2003} ``as a rule of thumb, you should use this quadrature approach only for small to moderate panel sizes \dots 50 is a reasonably safe upper bound.''\footnote{Stata 9 introduced an adaptive Hermite quadrature, which I discuss below. In addition, Stata releases until January 12th 2007 had a numerical problem known as ``underflow'' \cite{stata:2007}. The problem caused particularly large clusters, with as few as three hundred observations, to be dropped from the analysis. For the causes and solutions to common numerical problems in statistical computing see \citet{altman:2003}.}
+
+A second option is to rely on approximations such as \textit{Penalized Quasi-Likelihood} \citep{breslow:1993}.  Although PQL yields biased estimates when cluster sizes are small, Monte Carlo evidence indicates that the approximation is quite good with cluster sizes of 50 or more \citep{Breslow:2003}. A third option is using the  Laplace approximation, which is a better approximation than the PQL estimator. The Laplace approximation should work well when cluster sizes are large . \citep[p.269]{molenberghs:2005}.
+
+For smaller cluster sizes, the best available classical method uses adaptive Gauss-Hermite quadrature (AGQ). The Laplace approximation is equivalent to AGQ with one quadrature point. Increasing the number of quadrature points increases the accuracy of the approximation at the expense of speed.
+
+A final estimation strategy is provided by Bayesian simulation. By assigning prior distributions to all parameters, one can estimate a Bayesian hierarchical logit model using some combination of the Gibbs and Metropolis-Hastings samplers \citep{gelman:2004}. The Bayesian model can be set up as follows.
+
+\begin{eqnarray}
+P(y_{ij}=1)&=& logit^{-1}(\beta_{0j} + \beta_{1j} x_{ij})
+\label{eq:lmvnb}\\
+\theta_{1j}&=& \gamma_{00}+\gamma_{01} z_s \\
+\theta_{2j}&=& \gamma_{10}+\gamma_{11} z_s \\
+\beta &\sim& MVN(\mathbf{\theta},\Sigma) \\
+\gamma_{00} &\sim& N(\mu_{00},\sigma_{00}) \\
+\gamma_{01} &\sim& N(\mu_{01},\sigma_{01}) \\
+\Sigma &\sim& Inv-Wishart_{\nu_0}(\Lambda_0^{-1})\label{eq:lmvne}
+\end{eqnarray}
+
+$\beta_{0j}$ and $\beta_{1j}$ are the group specific coefficients, which we assume to have a multivariate normal distribution with variance-covariance matrix $\Sigma$ and mean vector composed by $\theta_{1j}$ and $\theta_{2j}$. Normal prior distributions for $\gamma$ and inverse-Wishart prior distribution for $\Sigma$ complete the model. Basic results from Bayesian statistics tell us that with $T$ large the priors for the individual level model will matter less (than with small $T$), so we have the estimates of $\beta_{0j}$ and $\beta_{1j}$ to approach the group by group analysis with $T$ large.
+
+\subsubsection{Two-step estimation \label{2slogit}}
+
+\citet{borjas:1994} derive the conditions under which we can estimate the structural parameters $\gamma$ in a two-step fashion analogous to the linear case from the previous section. The authors are interested in the case where $V(u_1)=0$, so the first step involves estimating a logit model with dummy variables indicating membership to each group. In the second step one regresses these dummy variables estimates on the set of group level explanatory variables using feasible generalized least squares.
+
+In the simulations and applied example I use Hanushek's \citeyear{hanushek:1974} version of the FGLS estimator, which was studied in the context of estimated dependent variables by \citet{lewis:2005}\footnote{This estimator is slightly different from the one proposed by Borjas\citep{borjas:1994,borjas:1982}. A comparison between the two variance estimators (Borja's and Hanushek's) is beyond the immediate interest of this paper. However,  the difference between the two estimators of the variance should approach zero under the random effects assumptions. \citep[p.179]{borjas:1994}.}.
+
+The case for consistency and asymptotic normality of $\gamma$ as $N/S\to \infty$ and $J\to\infty$ when $V(u_1)\neq 0$ can be briefly outlined. The use of standard $\sqrt{N/J}$ asymptotics guarantees consistency and asymptotic normality of the first stage group by group estimates. One difficulty is guaranteeing that we can ignore the first stage asymptotics when analyzing the second stage, which follows as long as ``$J$ grows slowly enough'' \citep[p.171][]{borjas:1994}.  \citet{achen:2005} illustrates this caveat through a clever example in which this condition is not satisfied. The practical recommendation is that for consistency in the second stage estimates we need $T$ in each group to be ``large enough''. With hundreds of observations in each group, this condition is likely to be satisfied with data coming from multiple surveys.
+
+One major payoff of the two-stage estimation is well summarized by \citeauthor{borjas:1994}:
+
+\begin{quotation}
+  (The) two-stage approach does not require a distributional choice for $u$, only the orthogonality conditions. In contrast to the alternative approaches which all require correct specification of the distributions of both the individual effects $e$ and the group effects $u$ (and generally require normality of $u$ for computational tractability), our procedure requires only that the distribution of ($v_{ij}$) be correctly specified and that ($\beta$) be a consistent estimator.  (p.171)
+\end{quotation}
+
+The most restrictive assumption says the individual level error terms are correctly specified. For example, we are imposing a common variance across groups (i.e. no panel specific heteroskedasticity.) The main problem is that if such heteroskedasticity exists, it will bias all first level coefficients. This oft forgotten issue should not been taken lightly, although I will follow those before me by ignoring it henceforth. Another important payoff is that two-step estimation is a much less demanding computational problem. The implementation of the random effects statistical procedures were designed for problems with a much smaller number of observations per panel and can run into numerical difficulties when estimating models with data structures of interest here.\citep{Primo:2007}
+
+\section{Design of the Monte Carlo experiments}
+
+In order to analyze the performance of some of the estimators discussed I designed a set of Monte Carlo experiments of logit models with large cluster sizes. I generate the dependent variable according to the following scheme:
+\begin{eqnarray}
+  \label{eq:dgp}
+  y^*_{ij}&=&\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}
+  \cdot z_s+\sigma_0u_{0j}+\sigma_1u_{1j}\cdot x_{ij} \\
+  y_{ij}&\sim&1\left[Uniform(0,1)<logit^{-1}(y^*_{ij})\right]
+\end{eqnarray}
+
+where $1[]$ is a binary operator that returns one if the logical statement inside it is true and zero otherwise.
+
+
+\begin{table}
+  \centering
+  \label{table:conditions}
+\begin{tabular}{ccc}
+\hline
+Condition & (1) & (2)  \\
+\hline
+$J$ & $(10,20,30)$ & $(10,20,30)$ \\
+$T$ & $500$ & $500$ \\
+$Corr(x,u_0)$ & $0$ & $0.5$  \\
+$Corr(x,u_1)$ & $0$ & $0.5$  \\
+$\sigma_0 $ & $(0,0.4,0.8)$ & $(0,0.4,0.8)$  \\
+$\sigma_1$ & $(0,0.4,0.8)$ & $(0,0.4,0.8)$  \\
+\hline
+\end{tabular}
+\caption{Experimental Conditions}
+\end{table}
+
+The independent variable $z$, along with error terms $u_0$ and $u_1$, are generated as standard normal variates of length $J$ and then replicated $T$ times so they are constant within groups.  The independent variable $x$ and the uniform distribution is drawn at the individual level. In all experimental conditions $\gamma_{00}=-0.25$, $\gamma_{01}=0.75$, $\gamma_{10}=0.75$, $\gamma_{11}=0.5$, $x_{ij}\sim N(0,0.1)$, $z_s \sim N(0,0.3)$, $Corr(z,u_0)=0$, $Corr(z,u_1)=0$ and $Corr(x,z)=0.5$. The conditions that do change are listed in Table \ref{table:conditions}.
+
+I will focus mainly on two aspects of the simulation results: efficiency and inference. The first set of experimental conditions concentrate on the effect of the residual level of variation and the number of groups on the small sample properties of the estimators. I expect the pooled estimator to perform best in terms of efficiency if the residual level of variation across groups ($\sigma_0$ and $\sigma_1$) is low.  The question is how much we gain, given the large sample sizes within groups. At high level of residual variation, the random effects model should be more efficient than the pooled estimator.
+
+Regarding inference, recall that the standard analyses of the random effects and cluster standard errors rely on fixed $T$ and large $J$ asymptotics. Much less is known about the case with small $J$ and large $T$.  At least until analytical results are available, Monte Carlo experiments can provide some guidance to practitioners.
+
+The second set of experiments violates one of the random effects assumptions. I specify the individual level variable $x$ and both group level disturbance terms $u_0$ and $u_1$ to be correlated at the .5 level.  I expect the random effects estimators to be more robust than the pooled estimator in this context.  The reasoning is as follows. First, note that this kind of violation of the strict exogeneity assumption is exactly the one we are guarded against when using fixed effects estimators. Secondly, recall that the random effects estimators approximate the fixed effects counterparts as $T$ gets large. It follows that with sufficiently large $T$ the random effects estimators won't be affected much by violations of this kind.
+
+
+
+\section{Results}
+
+I present the results from our Monte Carlo experiments in Figures \ref{fig:re} and \ref{fig:violate1}, which are structured as follows. The left column displays the efficiency of each estimator while the right column displays their performance regarding inference. The top row in each figure plots the results for $\gamma_{01}$ -- the additive effect -- and the bottom row plots $\gamma_{11}$, the interactive effect, of the group level variable $z$.
+
+Efficiency is measured using the root mean squared error criterion. For $\gamma_{k1}$, the root mean squared error is calculated as $\sqrt{\sum_{m=1}^{M} (\gamma_{k1m}-\hat\gamma_{01})^2/M}$, where $M$ is the number of simulations for each experimental condition and $m$ indexes the simulations. There are separate lines for each of the four estimators (Pooled, FGLS, ML and Bayes), and a separate panel for each level of residual variation.
+
+Rejection rates are calculated as follows. In each simulation compute the 95\% confidence intervals for each point estimate and associated standard error using a t-test with $J-2$ degrees of freedom. The use of a $t$ instead of a  normal distribution is suggested by \citet{donald:2007} in a similar context. The rejection rate is the proportion of simulations in which the true parameter is included in this region. Thus, this proportion should approximate 0.95 for correct inference.  For the Bayesian estimator I use the simulations from the posterior distribution to construct Bayesian 95\% confidence intervals. In the right columns of the figures I show each estimator of the standard error in a separate panel, while the different lines now display the  levels of residual variation.
+
+In all plots the x-axis displays  the number of groups, which can be 10, 20 or 30. There are 1000 simulations per experimental condition.
+
+
+
+
+\subsection{When the random effects assumptions are valid}
+
+\begin{figure}
+  \centering
+    \subfigure[RMSE for $\gamma_{01}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rmseZre.pdf}
+    }
+    \subfigure[Rejection rates for $\gamma_{01}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rejZre.pdf}
+    }
+    \subfigure[RMSE for $\gamma_{11}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rmseXZre.pdf}
+    }
+    \subfigure[Rejection rates for $\gamma_{11}$ ]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rejXZre.pdf}
+    }
+    \caption{Monte Carlo Experiments of logit models. These panels reflect the case when the random effects assumptions are valid.}
+  \label{fig:re}
+\end{figure}
+
+The plots in Figure~\ref{fig:re} present the results for the case in which the random effects assumptions are valid. As can be seen in the left column plots, the two-step estimator is the least efficient at low levels of residual variation but the difference all but disappears at higher levels. The pooled estimator is the most efficient when the degree of residual variation is low and is slightly more efficient overall for parameter $\gamma_{01}$ (the main effect.)  However, this is more than offset by the very large inefficiency attained by $\gamma_{11}$.  There is little difference among the random effects estimators.
+
+A common feature of the simulation results is the good performance of the pooled estimator when the residual level of variation is small. To perform inference, however, one needs not only point estimates but also standard errors with appropriate size.  Recall that one has reasons to suspect that the cluster standard errors do not have good properties when the number of groups is small and the number of observations in each group is large.
+
+I show the rejection rates in the right panels in Figure~\ref{fig:re}. They show that cluster standard errors do not provide appropriate coverage. When the number of groups is ten, the rejection rate is less than 90\% with moderate or high levels of residual variation. Even for $J$ as large as 30 the over-confidence of cluster standard errors can be substantial.  It is important to notice that even when the residual level of variation is zero the cluster standard errors do not provide appropriate coverage! This can be very unfortunate if we find ourselves in a situation where the residual level of variation seems to be low, since the pooled estimator has attractive properties in terms of efficiency and unbiasedness in this scenario. The panels labeled ``Pooled -- Jack-Knife'' demonstrate that  the Jack-Knife procedure works well under these circumstances. The Jack-Knife estimator line is always quite close to the 95\% nominal rate at every level of residual variation and number of groups in the experiments.
+
+The FGLS estimator performs well in terms of inference. I also display results with \emph{HC3} robust standard errors for the FGLS estimator. Following an argument suggested by \citet{wooldridge:2001} (p. 262:263) in the context of random effects estimation, even though the FGLS estimator is designed to take into account the heteroskedasticity generated by the fact that the dependent variable is being estimated, it is a good idea to make the analysis more robust if feasible.  Another reason for using robust standard errors comes from the Monte Carlo experiments done by \citet{lewis:2005}.  When the number of groups is small, they show the FGLS estimator to be 10\% more efficient than the OLS counterpart.\footnote{There are 30 groups in their experiments.}  The standard errors, however, are about 10\% too small, so there is the usual trade-off between robust inference and efficiency. The experiments show that the costs of using HC3 robust standard errors are small even when the heteroskedastic process is correctly modeled.
+
+Finally, the Bayesian and the Maximum Likelihood estimators  are slightly more efficient than the two-step estimator. The ML estimator  produces inferences  close to the nominal rate, while the Bayesian estimator has a tendency to be too conservative for $\gamma_{01}$  but anti-conservative for  $\gamma_{11}$ when the variance is large.
+
+
+\subsection{Violating the random effects assumptions}
+
+I now  analyze the second set of experiments, wherein the group level unobserved effects $u_0$ and $u_1$ are correlated with the individual level variable $x$ (column 2 in Table \ref{table:conditions}). Recall that this kind of endogeneity is the prime reason to adopt the fixed effects formulation in panel methods.  I argued, however, that this endogeneity becomes  less worrisome as the number of observations in each group gets large.
+
+
+\begin{figure}
+  \centering
+    \subfigure[RMSE for $\gamma_{01}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rmseZreV.pdf}
+    }
+    \subfigure[Rejection rates for $\gamma_{01}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rejZreV.pdf}
+    }
+    \subfigure[RMSE for $\gamma_{11}$]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rmseXZreV.pdf}
+    }
+    \subfigure[Rejection rates for $\gamma_{11}$ ]{
+      \includegraphics[width=.47\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/rejXZreV.pdf}
+    }
+  \caption{Monte Carlo Experiments of logit models. These panels reflect the case when the survey level disturbances are correlated with the individual level variable (i.e. the random effects assumptions are violated.)}
+  \label{fig:violate1}
+\end{figure}
+
+
+The  results support this intuition. In Figure \ref{fig:violate1} I show that the pooled estimator is quite inefficient even at modest levels of residual variation.  The panels also show that the  FGLS estimator  inefficiency is relatively  high at low levels of residual variation. The ML and Bayesian estimators continue to be the most efficient across the board.
+
+The correlation between $x$ and the group level error terms creates problems particularly for the estimation of $\gamma_{01}$.  The pooled estimator is extremely liberal, irrespective of the number of groups or the specific (Jack-Knife vs.  cluster) estimator of the standard error. The MLE rejection rates are close to correct .  The FGLS estimator  provides correct inferences, with the robust version (HC3) doing no worse (or better) than the regular standard errors.  Finally, the Bayesian estimator again is too conservative, particularly when the number of groups is small.
+
+Rejection rates were closer to the nominal rate for $\gamma_{11}$. The FGLS, MLE and Jack-Knife estimators all fared very well. The Bayesian estimator provides  correct inferences for low or moderate residual level of variation, but is too liberal when this level was high and the number of groups was 30. The  clustered standard errors are, once again, too small, but the Jack-Knife estimator inferences were close to the nominal rate.
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.6\textwidth]{/Users/eduardo/projects/twostep/trunk/simulations/bias.pdf}
+  \caption{Bias in the estimates of $\gamma_{01}$ and $\gamma_{11}$. The bias of the pooled estimator is much larger than those of  the random effects estimators. The bias is severe for $\gamma_{01}$ when the random effects assumptions are not met.}
+  \label{fig:bias}
+\end{figure}
+
+
+As shown in Figure \ref{fig:bias}, the main reason why the ``fix-the-standard-errors'' approach works so badly in this application is the bias caused by violating the random effects assumptions. The bias for the $\gamma_{01}$ estimate when the random effects assumptions are not met, in particular, are an order of magnitude larger than the bias of the random effects estimators. Thus, even if an appropriate correction for the size of the standard errors of the pooled estimator could be found, these results would not support the use of the pooled estimator due to its large potential for bias.
+
+\subsection{Summary}
+
+No general statements can be made using solely Monte Carlo experiments. However, it is clear that the results matched most of my expectations. The main findings can be summarized  as follows:
+
+\begin{enumerate}
+
+\item At low levels of residual variance, the best choice is to estimate the pooled model.  The Jack-Knife estimator of the standard error provides appropriate rejection rates as long as the random effects assumptions hold. The clustered standard errors should not be used under any circumstances with data coming from multiple surveys.
+
+\item However, researchers are seldom in the position of explaining most of the variation across surveys, and cannot be sure that the random effects assumptions really apply. Therefore, I strongly suggest the estimation of random effects models. They are  more efficient, less biased, and also provide better inferences at a wider array of circumstances.
+
+\item The particular random effects estimator to use seem to be a second order matter. Two-step methods are, as expected, less efficient, but the degree of inefficiency is minor.  On the other hand, the two-step estimator is more stable and computationally cheap. It can also be straightforwardly extended to other non-linear models, such as conditional logit \citep{glazerman:1998} or ordered logit (see below).
+
+\item The Bayesian estimator provides  inferences that are in many circumstances too conservative. For the case with a small number of groups this is arguably not a deficiency. In addition, having the posterior distribution of the parameters makes prediction and model checking much easier \citep[chapter 6]{gelman:2004a}, while also providing uncertainty estimates for the variance parameters.  There is a drawback in the amount of  computer time required, but it is not prohibitive. (About 3 minutes for 4000 simulations in my experiments).
+
+\item The ML estimator was among the most efficient and provides correct inferences.  It is important to note here that these results are conditional on using a $t$ distribution to construct the confidence intervals. Confidence intervals constructed under the normal distribution yield inferences that are anti-conservative when the number of groups is below 30.
+
+\end{enumerate}
+
+\section{Well-being over time in the United States }
+
+One key advantage of the two-step method over alternative procedures is how easy it is to adapt it to unique features of the data at hand. In this section I show how to the two-step model can easily be extended to ordered multinomial response variables.
+
+The substantive question to be addressed is the following. Does economic growth raise the well-being of the population? Studying the trend in reported well-being over time, \citet{Easterlin:1974} argues that the concept is relative. That is, people compare themselves to others when judging their own well-being. Thus, increasing the average income in the population should bring little improvement in average reported well-being. \citet{Blanchflower:2004} analyze responses to reported well-being questions in both the United States and Great Britain, finding support for the Easterlin hypothesis. They also go a step further by using individual level data (instead of aggregate responses) and analyzing the trends by subgroups.
+
+Among other interesting results, the authors find that general levels of happiness in the US population have declined over time in the United States from 1972 to 1998. Since income per capita has increased in the period, this is evidence in favor of the Easterlin hypothesis. In addition, by analyzing sub-samples of the data, they find that  happiness among women has declined, while happiness among man has remained stable and among blacks it has increased. They measure happiness using the General Social Survey, which asks ``taken all together, how would you say things are these days -- would you say you are very happy, pretty happy or not too happy?''
+
+\subsection{Two-step ordered logit}
+
+The ordered structure of the responses are dealt with by using an ordered logit model. Using the latent variable formulation we have:
+
+ \begin{eqnarray}
+   y^*_{ij}&=&\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}\cdot z_s+v_{ij}\\
+  v_{ij}&=&\varepsilon_{ij}+u_{0j}+u_{1j}\cdot x_{ij}
+   \label{eq:ologit}
+\end{eqnarray}
+
+We observe $y_{ij}\in \{1,2,3\}$. Assuming $\varepsilon_{ij}$ follows a logistic distribution and ignoring $u_{0j}$ and $u_{1j}$ for the moment, we have\footnote{For reasons that will be clear soon, we use the parametrization described in equation 6.12 of \citet{Gelman:2007}, where there is a constant and the first cutpoint is constrained to be zero. The parametrization in Stata and \citet{Venables:2002a} estimates an extra cutpoint and constrains the constant to be zero instead.}:
+
+\begin{eqnarray}
+P(y_{ij}=1) &=& 1-logit^{-1}(\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}\cdot z_s) \\
+P(y_{ij}=2) &=& logit^{-1}(\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}\cdot z_s) \\ && -logit^{-1}(\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}\cdot z_s - cut)\\
+P(y_{ij}=3) &=& logit^{-1}(\gamma_{00}+\gamma_{10} x_{ij}+\gamma_{01} z_s+\gamma_{11} x_{ij}\cdot z_s - cut)
+\end{eqnarray}
+
+The cutpoint $cut$ is estimated along the other coefficients in the model. The terms $u_{0j}$ and $u_{1j}$ are not in general zero, of course. It is possible to estimate this random effects logit model using Bayesian or maximum likelihood techniques. Two-step estimation is also possible, the only difficulty here is that in most situations we would like the cut point to be the same across groups.\footnote{See \cite{king:2003b} for an application where cutpoints are modeled and vary across countries.} Fortunately, one can easily constrain the cutpoints by estimating a single ordered logit regression with group level indicators and interactions.
+
+That is, we can estimate:
+
+\begin{eqnarray}
+P(y_{ij}=1) &=& 1-logit^{-1}(\beta_{0j}+\beta_{1j} x_{ij}) \\
+P(y_{ij}=2) &=& logit^{-1}(\beta_{0j}+\beta_{1j} x_{ij}) - logit^{-1}(\beta_{0j}+\beta_{1j} x_{ij}-cut)\\
+P(y_{ij}=3) &=& logit^{-1}(\beta_{0j}+\beta_{1j} x_{ij}-cut)
+\end{eqnarray}
+
+and then regress $\mathbf{\beta_{0}}$ and $\mathbf{\beta_{1}}$ on $Z$ in the second step.
+
+\subsection{Results using pooled estimation}
+
+I was able to successfully replicate table 2 of \citet{Blanchflower:2004}\footnote{Replication results are available upon request.}.  The authors  ignored the clustered nature of the data and simply estimated a pooled ordered logit model. This lead to serious underestimation of the standard errors, particularly for the time trend, which obviously only varies at the survey level. In Figure \ref{fig:happySe} I compare the size of the regular and cluster standard errors to Jack-Knife standard errors. The regular standard errors for the time trend is less than half of the Jack-Knife standard errors, and even the cluster standard errors should be about 15\% larger. The consequence is that the claim made by  \citeauthor{Blanchflower:2004} that ``(r)eported levels of well-being have declined over the last quarter of a century in the US'' is not warranted in such general terms by the data.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.4\textwidth]{/Users/eduardo/projects/twostep/trunk/SweaveOutput/seRatiosHappy2.pdf}
+  \caption{Ratio of standard errors calculated with regular and cluster to those calculated using the Jack-Knife. }
+  \label{fig:happySe}
+\end{figure}
+
+
+% \begin{table}
+%  \small
+%  \centering
+%   \input{SweaveOutput/tableHappy2}
+%   \label{table:happymodels}
+%   \caption{Regression results. Time measured in decades, 1972=0.}
+% \end{table}
+
+\subsection{Results using random effects}
+
+In a two-step model we regress the interactive coefficients of time dummies and the individual level covariates on the macro level covariates, in this case ``time''. I show the results graphically in Figure \ref{fig:happyCoef}.\footnote{\citeauthor{Blanchflower:2004} indirectly take into account the varying $u_{1j}$ by analyzing subsamples of women, men, black, whites, etc.} Note that I added the 2000, 2002, 2004 and 2006 GSS surveys.
+
+The age predictor is centered at 30, thus the intercept reflects the predicted value of $y^*$ for a 30 (instead of zero) years old white woman. The slight downward trend in the coefficients since 1972 is statistically significant, but there remains substantial variation over short periods of time in the coefficients. The trend for the male coefficients is positive, which implies a flat trend for men over the period (.01). We should also keep in mind that the first level coefficients are significantly different from zero in only four of the 26 surveys. Thus, the evidence for a gap between men's and women's reported well-being is underwhelming.
+
+The difference in well-being between blacks and whites is much more pronounced, as is its downward trend in absolute terms throughout the period. No similar trend is observed in the difference between whites and those in the ``other races'' category. Finally, there is a downward trend in the linear coefficient of age (in decades). While in  the 1970s increasing age was predicted to increase happiness sizably, in the 2000s the predicted increase is basically null. The panel to the right reveals that there is not much evidence for a trend in the quadratic term or for a quadratic term at all.
+
+
+
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{/Users/eduardo/projects/twostep/trunk/SweaveOutput/happyCoef.pdf}
+  \caption{Survey specific estimates of the individual level variables plotted against year of the survey. The two-step estimates of the relationship is displayed below each panel.}
+  \label{fig:happyCoef}
+\end{figure}
+
+This application shows the  importance of including interactions when modeling multilevel structures. As \citet{western:1998} argued,  assuming away the possibility that coefficients vary across clusters can lead to misleading and inefficient estimates. The two-step approach proved to be useful and easy to extend in this situation, allowing all coefficients to vary across time.
+
+\section{Conclusion}
+
+The typical conclusion of a Monte Carlo study argues that further studies are needed in order to establish generality of the findings and solve the problems encountered.  Although a more thorough analysis of specialized software is needed for cases with a small number of clusters and very large cluster sizes, I argue that the evidence presented so far is convincing enough to support some basic contentions in support for the use of random effects models when analyzing multiple surveys.
+
+The first can be stated simply: two-step models \emph{are} ``random effects'' models. That is, they are just a different method to estimate the same model, as long as the cluster sizes are sufficiently large.  However, the Monte Carlo results show that some two-step estimators have greater  numerical stability and robustness to a wider set of conditions than the maximum likelihood and Bayesian estimators. The two-step approach is also easily extendable, as I showed by analyzing an ordered dependent variable in the applied example.
+
+The second conclusion is that cluster (and Jack-Knife) standard errors often perform poorly with large cluster sizes. Researchers are likely to find themselves in situations where some of the variation\footnote{With large cluster sizes, checking the residual level of variation can be accomplished through graphical displays, although more formal residual analysis is also possible.} across surveys can be explained by the survey level regressors but certainly not all of it. When this is the case, random effects models can be much more efficient and more robust than cluster standard errors. They also outperform cluster standard errors when some of the random effects assumptions are not met. It is noteworthy in the applied example there is substantial difference between the inferences from the pooled and those from the random effects model. Although both models are biased when individual level regressors are correlated with the survey level disturbances, the bias is attenuated in random effects models as the number of respondents increase.
+
+The advantages of two-step methods are computational and practical. Breaking down the analysis into two largely separate steps facilitates exploratory analysis and model checking for the researcher, and alleviates convergence problems and computational costs. As an added bonus, the two-step methods I discussed are implementable with not much work in any modern statistical software.
+
+These advantages should be contrasted with the arguments laid out by \citet{franzese:2005}. The author claims that in many circumstances we want more than just the coefficients and standard errors that are estimated directly from the two-step model. For example, we might be interested in  estimates that are result of  combinations of  coefficients arising from more than one of the two-step equations. Although this is still feasible using FGLS estimators, it is certainly a more cumbersome procedure when compared to working with the full ML estimators or simulations from the full Bayesian posterior.  A possible course of action is to write software that automates such calculations when using the FGLS estimator. Another is to continue the Bayesian route using sampling strategies that take advantage of the nested structure of the data. 
+
+Let me conclude with some practical recommendations:
+
+\begin{enumerate}
+\item Two-step analysis should only be trusted when cluster-by-cluster analysis is a sensible course of action. For example, one should not estimate a probit model with just 30 individual level observations. Thus, one should also not estimate a two-step probit model when there are only 30 observations in each cluster. Unfortunately, how many observations are enough depend not only on the model being estimated but also on the particularities of the data at hand so there are no hard and fast rules.
+\item In the simple two-level case addressed in this paper, inferences should be made using the $t$ distribution, as suggested by \citet{donald:2007}. The $t$ distribution corrects for most of the overconfidence of the  ML  estimator noted in previous versions of this paper.
+\item Even if there is a convenient ML or Bayesian random effects estimator to use, the two-step method is still a very useful check on the estimation due to its numerical stability. The ML estimator failed to converge in about 0.5\% of the simulated datasets, while the two-step estimator did not have any convergence issues.
+\item If the researcher is only interested in the coefficients readily estimated in a two-step fashion, there is no  reason to use the ML or Bayesian estimator. The two-step estimator will be just efficient and robust. If combinations of coefficients are needed the researcher is better served by a one-step random effects estimator.
+\item Finally, and most importantly, pooled analysis is biased, inconsistent, inefficient and provides inacurrate inferences when cluster sizes are large and the number of clusters is small. The Monte Carlo experiments performed  strongly suggest  the use of random effects analysis when analyzing such data structures.
+\end{enumerate}
+
+
+\section*{Appendix: Computational details}
+
+Simulations were done using the R software environment version 2.8.0 and 2.8.1 \citep{R-Development-Core-Team:2008}. For each simulated data-set I estimate the following models: maximum likelihood (using the \emph{lme4} package by \citeauthor{bates:2003}, default options), pooled logit (using the Design package by \citeauthor{harrell:2008}),  and two step FGLS (using the estimator proposed by \citeauthor{hanushek:1974} and investigated by \citeauthor{lewis:2005}). For the Bayesian estimation I   modified the  \emph{rhierBinLogit} function written by \citet{rossi:2006} to use Independent Metropolis Sam
+pling. This  reduced the autocorrelation in the posterior simulations leading to faster convergence than the original Random-Walk Metropolis sampling strategy.   Note that this strategy is only recommended when cluster sizes are large.
+
+Figures \ref{fig:re}, \ref{fig:violate1} and \ref{fig:happySe} were produced using the \emph{lattice} R package \citep{Sarkar:2007}. Figure \ref{fig:happyCoef} was produced  using the base package.   Figure \ref{fig:bias} was produced using the \emph{ggplot2} package \citep{wickham:2008b}.
+
+Computations were done in a MacBook with a Intel Core 2 Duo 2.2GHz running OS X 10.5 and at the Amazon Elastic Compute Cloud (EC2) service using Ubuntu 64 bits virtual machines. Details available upon request.
+
+% \newpage
+% \singlespace
+% \footnotesize
+%\input{replication4.r}
+% \bibliography{/Users/eduardo/files/references/eduardo3}
+% \end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

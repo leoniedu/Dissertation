@@ -1,0 +1,119 @@
+%%%%%%%%%%%%%%%%
+% Ph.D. thesis %
+%%%%%%%%%%%%%%%%
+
+%\documentclass[11pt,openright,twoside,letterpaper,onecolumn]{report} %% USE THIS FOR DOUBLE SIDED
+\documentclass[11pt,openright,oneside,letterpaper,onecolumn]{report}  %% USE THIS FOR SINGLE SIDED
+
+\input{header}
+
+\begin{document}
+
+% For the first pages we do not have numbering 
+\pagestyle{empty}
+
+\thesistitlepage
+\thesiscopyrightpage
+
+\thesisabstract
+
+% In the "roman-numbered" section of the thesis, we have numbers at the bottom
+% and we have to reduce the textheight of the text to make space for the number
+
+\pagenumbering{roman}
+\pagestyle{plain}
+
+\setlength{\footskip}{0.5in}
+
+\setcounter{tocdepth}{2}
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
+\cleardoublepage
+
+\listoffigures
+\cleardoublepage
+
+\listoftables 
+\cleardoublepage
+
+%%%
+%%% Acknowledgments
+%%%
+\input{ack.tex}
+\cleardoublepage
+
+%%%
+%%% Dedication page
+%%%
+\thispagestyle{plain}
+\strut \vfill
+\centerline{\LARGE 
+Dedication text
+}
+\vfill \strut
+\cleardoublepage
+
+%\draft   % Generates a draft version in single-space
+
+%%%
+%%% BODY
+%%%
+\pagestyle{headings}
+\pagenumbering{arabic}
+
+%
+% In the "arabic" section of the thesis, we do not have numbers at  the
+% bottom and we want to use the full length of the page to avoid vbox
+% underfulls. We use the fancyheaders package to adapt the headers
+% according to the  Columbia requirements.
+%
+\setlength{\textheight}{8.5in}
+\setlength{\footskip}{0in}
+
+% We change the pagestyle 
+\fancypagestyle{plain} {%
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE,LO]{\itshape \leftmark}
+\renewcommand{\headrulewidth}{0pt}
+}
+\pagestyle{plain}
+
+\chapter{Introduction}
+\label{section:intro}
+\input{intro}
+
+\part{The Statistical Analysis of Electoral Coalitions}
+\label{sec:corpus}
+\input{coalitions_chapter}
+
+% \part{The Political Consequences of Malapportionment}
+% \label{sec:corpus}
+% \input{malapportionment}
+
+
+% \part{Analyzing Multiple Surveys: Results from Monte Carlo Experiments}
+% \label{sec:corpus}
+% \input{twostep}
+
+% \part{Conclusions}
+% \label{sec:conclusions}
+% \input{conclusions}
+
+%%%
+%%% Appendices
+%%%
+% \part{Appendices}
+% \appendix
+% \input{sample-appendix}
+
+%%%
+%%% Bibliography
+%%%
+\part{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliography{refs}
+\bibliography{/Users/eduardo/files/references/eduardo3}
+\bibliographystyle{named} 
+
+\end{document}

@@ -1,0 +1,404 @@
+\normalspace
+%cite elbridge gerry's salamander
+
+
+
+
+%\chapter{Political Representation in Brazil}
+
+%\section{Introduction}
+
+Politics in Brazil, even for natives, can be confusing, even overwhelming. Since democratization in 1985, about 20 parties are represented in \emph{Câmara dos Deputados} (the lower chamber) each session while the effective number of legislative parties \citep{laakso:1979} fluctuated around 9. (Figure \ref{fig:nparties}) \footnote{Since 1991 more than 30 different parties have been represented in that chamber for at least a brief period.}  Furthermore, party members do not behave cohesively in roll call votes \citep{carey:2007,ames:2001}\footnote{See \citet{figueiredo:2000} for a different perspective.}. Party switching in the chamber is also widespread: in each legislative session (4 years)  a third or more of the legislators switch parties at least once. Many switch more often than that \citep{Desposato:2006}. It is no wonder that, as expressed by titles such as ``The Deadlock of Democracy in Brazil''\citep{ames:2001},  scholars are concerned about the impact of these institutional and behavioral characteristics on the likelihood of  ``consolidation'' of the political system.
+
+
+% Ames 2001
+% ``The formation of new states on the fronteer created additional legislators likely to be conservative''(30)
+% ``commonly discussed problems of democratic consolidation, including malapportionment, corruption, the nature of representation and accountability, and party building''. (41)
+% Mainwaring 1999
+% ``Malapportionment, which in Brazil is a product of federalism, has affected party politics and has contributed to the weak institutionalization of the party system. Brazil has among the most pronounced malapportionment of any democracy in the world. The small states are over-represented in both the upper and lower houses, and large states are commensurably underrepresented. The smaller states on average are poorer, and politics has a more clientelistic and patrimonial hue there. Politicians in the over-represented states tend to be less attached to parties and to be more antiparty in attitude. The effect of the over-representation of small states is pronounced.''(263)
+
+Surprisingly, despite all its ``faults'', Brazilian democracy has proved to be remarkably stable and functional. Studying political representation in Brazil, however, is still a daunting task,  since the fluidity (and sheer number) of parties and  regional diversity   pose serious problems to a party-based study of representation.  
+
+In this paper I study one  aspect of the Brazilian political system that is frequently mentioned as an obstacle to full consolidation  of the Brazilian democracy: the over-representation of small states (malapportionment.) In his book on the history and current challenges of citizenship in Brazil, \citet[][p.30]{carvalho:2001} claims malapportionment is ``perhaps'' the most serious institutional problem in Brazil today, while \cite{samuels:2001a} refer to it as ``devaluing'' the vote. Malapportionment is also blamed for the sluggish progress of economic reform, as can be seen in this quote from the international press\citep[][p.82]{economist:2008}: ``Money (in Brazil) is spent on pensions rather than building the roads and ports that would make it richer. Unfortunately the public sector is so large and the poorer states so over-represented in congress that trying to change any of this can appear impossible.''
+
+Malapportionment is defined as the difference between the shares of legislative seats and the shares of population held by electoral districts.\citep{Samuels:2001} To measure its effects we have to compare the elected chamber to a counterfactural: the chamber that would be elected if no malapportionment existed. Most of the literature compares the outcomes of these two chambers (one actual chamber and its counterfactual) by looking how party shares change given a hypothetical reapportionment of the chamber in question. This is problematic in at least two respects. First, in many countries, Brazil included, parties are not composed of homogenous members that simply follow the party line. When heterogeneity is present, the procedure of simply counting the votes is flawed, and researchers should look at which particular members are (or not) elected. Secondly, changes in party shares can have different political outcomes depending on which parties are benefited or prejudiced by malapportionment. Some parties are more ``alike'' than others; thus, changes in party shares might not lead to strikingly different political outcomes if the party gaining seats is similar to the party losing seats.
+
+In this paper, I argue that the spatial theory of voting can provide a framework to alleviate both problems. In a nutshell, parties can be thought as ideal point distributions in a low dimensional space. The concept of ``similar'' parties can be then precisely defined as the spatial distance between parties. Within party heterogeneity, on the other hand,  can be expressed through a variance parameter in the party distributions. 
+
+The remaining challenge is how to estimate individual ideal points and the parameters of the  ideal point distributions. I propose a multilevel ideal point estimation model  to estimate these parameters from roll call data. These estimates are then linked to votes in the electorate -- they are taken to be the expressed preferences of voters. I can then compare the effects of different aggregation rules on the estimate ideal point distributions of the chamber. The effects of malapportionment, for example, can be precisely defined as the difference in the distributions between a chamber under ``one person, one vote'' rule and one where voters from some districts have larger weight than voters from others (``malapportionment''). Using this particular benchmark I find that the effects of malapportionment is at times statistically significant, but very small. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/nparties.pdf}
+  \caption{\emph{Number of political parties elected and \cite{laakso:1979}'s effective number of legislative parties. Câmara dos Deputados, Brazil, 1986-2006. The number and effective number of parties have fluctuated around 20 and 9, respectively. The smallest district magnitude  in Brazil is 8.}}
+  \label{fig:nparties}
+\end{figure}
+ 
+%\citep{poole:1997,clinton:2004,poole:2005} and its linkages to voters. \citep{Clinton:2006,Bafumi:2007a} 
+
+%%The paper proceeds as follows. I first briefly outline of the main features of the Brazilian political system. I Then , I present the results   
+
+\section{Outline of the Brazilian Political System}
+
+Brazil is a presidential democracy that uses open list proportional representation (OL-PR) to elect lower house (and state) legislators. In this system,  votes to specific candidates order the party list\footnote{The remainders are assigned under the D'hont method in the Brazilian case.}. Although voters can also vote for a party (instead of an specific individual in a party), most choose to vote for individual candidates. In the 2006 Câmara dos Deputados elections, for example, only 13\% of the votes for the Câmara dos Deputados were cast to parties instead of individual candidates.  
+
+Much of the literature argues that OL-PR systems produce incentives  for intra-party competition when the magnitude of the district is high  \citep{ames:2001,carey:1995,mainwaring:1999,carey:2007}. Combined with the relative weakness of partisanship in the electorate, the prevalent expectation  is that party members in the legislature will not behave cohesively. In fact,  \cite{carey:2007} presents cross-national evidence supporting the notion that party unity is lower when candidates have to compete for office with members from their own party. Carey also finds that parties in presidential systems  have lower party unity than in parliamentary systems, making the Brazilian political environment conducive to party disunity.    
+
+Moreover, \citet{desposato:2003} has   shown that parties are significantly more cohesive at the sub-national level than at the national level in Brazil, calling into question the assumption that parties have common meaning across districts.\footnote{Using different methods, however, \citet{carey:2004} find no evidence of state-level pressure on the cohesiveness of parties in Congress.} In sum, political parties in Brazil are not homogeneous units, and it is possible that regional differences are pronounced. 
+
+
+\subsection*{Malapportionment in the Brazilian Lower Chamber}
+
+
+
+\begin{figure}
+  \centering
+    \subfigure[Over-representation plotted against population size (1998). The states serve as electoral districts in Brazil. A vote in the smallest state in population (Roraima) is equivalent to about 16 votes in the largest state, São Paulo. Voting weights in most states cluster around $1.7$. To enhance clarity, the $y$ axis is on the $\log 2$ scale while the $x$ axis is on the $\log 10$ scale. The labels retain the original units.]{
+      \includegraphics[width=.43\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/malapScatter.pdf}
+    }
+    \hspace{.3in}
+    \subfigure[Over-representation plotted against Human Development Index by state (2000). The most over-represented states have HDI close to the median. To enhance clarity, the $y$ axis is on the $\log 2$ scale. The labels retain the original units.]{
+      \includegraphics[width=.43\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/malapIncScatter.pdf}
+    }
+    \subfigure[Over-representation plotted against \% state population living in cities with population larger than 150 thousand people (1998). Only 2.5\% of the cities in Brazil have populations in this range. To enhance clarity, the $y$ axis is on the $\log 2$ scale. The labels retain the original units.]{
+      \includegraphics[width=.43\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/malapXkScatter.pdf}
+    }
+    \hspace{.3in}    
+    \subfigure[In brighter colors are the states with the highest levels of over-representation. They are mainly located in frontier regions of the country.]{
+      \includegraphics[width=.43\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/mapC.pdf}
+    }
+    \caption{\emph{Over-representation in the Câmara dos Deputados, 1998. We normalize over-representation so that the number of seats per vote in São Paulo is 1.}}
+    \label{fig:overview}
+  \end{figure}
+
+The states in Brazil  serve as electoral districts, with magnitudes for the lower chamber varying from eight to 70 seats. More importantly, these limits are constitutionally mandated: no state can have less than eight or more than 70 deputies. Given the variation in population size across states, this feature leads to substantial malapportionment in the Câmara dos Deputados. In fact, \citet{Samuels:2001} list Brazil as having the 17th most malapportioned lower chamber in the world. 
+
+Malapportionment occurs whenever there is a discrepancy between the share of seats and the proportion of the population present in a country's districts. The issue is normatively important, since malapportionment violates the norm of equal representation. In their 2001 article, \cite{Samuels:2001} convincingly demonstrate that high levels of malapportionment are present in some Latin American countries when compared to  advanced industrial democracies. It remains to be shown, however, what are the \emph{political} consequences of malapportionment. That is, would political outcomes be significantly different in a correctly apportioned system? It should be obvious that  these consequences depend crucially on the distribution of preferences across  districts. In a completely homogeneous polity, no level of malapportionment would change the observed outcomes. On the other hand, in a heterogeneous polity, even small levels of malapportionment can lead to substantial changes in the overall policy outcomes. 
+
+\citet[][p.263]{mainwaring:1999} argues  that malapportionment is a problem in Brazil because ``smaller (overrepresented) states on average are poorer, and politics has a more clientelistic and patrimonial hue there. Politicians in the overrepresented states tend to be less attached to parties and to be more anti-party in attitude. The effect of the Overrepresentation of small states is pronounced.'' However, as can be gleaned from panel b in Figure \ref{fig:overview}, the overall level of development of overrepresented states do not differ much from the remaining states. They are, in fact,  right at the center of the distribution of the Human Development Index across states. A similar conclusion is reached with  respect to urbanization level (panel c). Nevertheless, development level or urbanization  are not necessarily good surrogates for political preferences in Brazil, even at the aggregate level. A more direct way of estimating them is needed. In order to do so, we need to rethink the problem of measuring representation.
+
+% Representation chain:
+
+% 1) Preferences -> Votes
+% 2) Votes -> Seats
+% 3) Seats -> Legislative behavior
+% 4) Legislative behavior -> Policy Outcomes
+
+
+\section{Reframing political representation}
+
+The process of political representation in modern democracies can be seen as a series of steps linking the preferences of citizens to outcomes of the political system.  Each citizen decides how to vote according to his  (broadly defined) preferences. Votes are then aggregated through electoral rules and district assignments into seats at the legislature. This process influences the (induced) preferences of those selected, which in turn, interacted with institutional constraints,   determine policy outcomes.
+
+\vspace{0.4cm}
+\fbox{\parbox{10cm}{Voters' preferences $\Rightarrow_{(1)}$ Votes $\Rightarrow_{(2)}$  Seats  $\Rightarrow_{(3)}$ Legislators' Induced Preferences   $\Rightarrow_{(4)}$ Policy Outcomes}}
+\vspace{0.4cm}
+
+Scholars judge how representative is the system by looking at the match between a preceding and a  subsequent step of the representation chain. In his recent review article on  political representation,  \citet{powell:2004} describes this literature as being divided roughly into two camps: substantive representation and vote-seat representation. The procedural representation, or ``vote-seat'' approach,  is  summarized as follows: 
+
+\begin{quote}
+In this theory, the citizens are principals whose preferences are expressed by their (first-preference) vote for political parties. The agents are the collective party representatives in the legislature, regardless of which district chooses them. The comparison is between all the citizen votes and all the legislative seats with various, similar measures of proportionality as the standard of desirable representation. Representation is shaped by the interaction of competing parties, citizen's choices, and election rules. \citep[][p.279]{powell:2004}
+\end{quote} 
+
+The theory  rests on the following assumptions.
+
+\begin{enumerate}
+\item Votes, being the ``expressed'' preferences of voters, are taken to be all  we need to know  about the preferences of the citizenry.
+\item Parties are  unitary (i.e. cohesive.) In particular, parties are uniformly meaningful to voters across  voters and districts (e.g. no regional variation.)
+\item The division of seats among parties in the legislature is seen as the relevant outcome in the representation process.
+\end{enumerate}
+
+The substantive representation strand of the literature, on the other hand, tries to study directly the existing links between voters preferences and either the individual representative preferences (dyadic representation) or final outcomes (collective representation). Contrasting with the seat-vote literature, substantive representation scholars do not study parties as discrete units. They assume parties have ideological preferences and, therefore, can serve as (partial) substitutes.  
+
+In this section, I discuss how multi-party systems and intra-party heterogeneity creates difficulties and diminishes the usefulness of the seat-vote approach. I argue that embedding the seat-vote approach into spatial voting theory helps us solve some of these difficulties. The use of spatial voting theory narrows the gap between the vote-seat and the substantive representation approaches. 
+
+\subsection*{Seat shares and policy outcomes}
+
+The analysis of the outcomes of the voting process in the ``vote-seat'' approach typically ends with the assignment of seats to the political parties. Are the final seat shares among parties the (only) relevant outcome to be studied? Under some conditions they can be. In an idealized Westminster system, for example, the mapping between number of seats and final policy outcomes is quite straightforward, provided (as is likely)  one party gets the majority of seats. It follows that voters also know with some confidence the policies that will be implemented. Thus, the knowledge of a single number -- the share of seats of one of the two political parties -- provides considerable information about the likely outcomes of the political process in two-party parliamentary systems.  
+
+As the number of political parties increases, however, the more complex becomes the task of linking share of seats to political outcomes. In addition to the obvious cost of analyzing one extra number for each additional party (N-1 shares in a N-party system), the  relationship between seats and outcomes also becomes less immediate. Suppose there are three parties, A, B and C. What should we expect to happen with policy outcomes if, say, the share of seats of party C is decreased? The vote-seat representation literature provides little guidance on this question. What is needed is  some theory, or at least  empirical regularities,  linking seat shares to outcomes. 
+
+One such theory poses that ``ideological'' constraints make the effective policy making space to be of a low dimension (usually one or two.) Now, with distances between parties defined,  parties can function as (partial) policy substitutes of each other. If the ideological space is one-dimensional, we can provide predictions about the outcomes of the political process using a single number, the median voter, instead of the N-1 tuplet of seat shares (step 3.) \citep{enelow:1984}\footnote{Unfortunately, in multidimensional spaces there is in general no such simple summary, but at the very least one can move from (N-1) seat-shares to preferences in a one or two-dimensional space.}
+
+\subsection*{Intra-party heterogeneity }
+
+A related problem concerns the implicit assumption that party labels are sufficient to reliably predict legislative behavior.  However, we observe legislators diverging from their party positions in roll call votes even in political systems well known for highly cohesive political parties.\cite{carey:2007}  Intra-party heterogeneity poses a difficult problem to the votes-seats tradition, since in many applications it relies on aggregated measures across districts to gauge the representativeness of the political system. If parties have different meanings across districts or voters, such aggregation is not warranted.\footnote{One way to introduce heterogeneity is to further divide the parties into factions, as long as those are recorded in the aggregate vote results. This can be useful, for example, if the party factions are regionally defined (e.g. the Walloon and Flemish parties in Belgium, or southern vs. non-southern democrats in the United States.) But it further complicates the analysis by increasing the number of party/faction shares to be analyzed.}
+
+The spatial theory of voting again provides a useful framework. If parties are very cohesive, they might be well represented by a single point in the ideological space. If there is significant intra-party heterogeneity, on the other hand, we might think of parties as distributions of ideal points. Hence, spatial theory can both accommodate the multiplicity of parties and the heterogeneity within parties. 
+
+\subsection*{Voters' preferences}
+
+The relationship between voters' preferences and their votes is obviously important, but not usually treated in any depth by ``seat-vote'' representation scholars. They deal with ``\ldots perhaps the hardest empirical and normative problem in representation analysis, citizen preferences, simply by assuming that all we can or need to know about those preferences is the partisan votes that citizens cast in competitive elections.'' \citep[][p.274-275]{powell:2004}. Connecting electoral choice with fundamental citizens' preferences requires a theory of electoral choice, but scholars in the vote-seats tradition do not have (or prefer not to produce) such a theory. Perhaps more crucially in practical terms, it also requires individual level data, which is in most cases unavailable or too expensive to collect.\footnote{Surveys are expensive and rarely have a large enough sample size that would enable the estimation of this model by state. }  In many circumstances, therefore, (aggregated) votes cast in elections are all we \emph{can} know about citizens preferences. 
+
+This does not, however, imply that we should treat votes for different parties or candidates as incommensurable. Suppose that we can somehow estimate the ideological positions of all candidates in a election, but not of voters. In this case, holding the voters actions constant, we can use the spatial theory of voting to compare the outcomes of different aggregation mechanisms. In a one dimensional policy space, for example, we can calculate the median voter that would be elected under (marginally) different electoral rules and produce a single, well defined, estimate of the effect. In other words, we can think of votes in the electorate as expressions of preference for a particular ideal point in the policy space. In case voters vote for parties instead of individuals, votes can be thought as support for ideal point \emph{distributions}, so that a vote for a party that is very homogeneous is qualitatively and quantitatively different from a vote to a party that is very heterogeneous. The challenge is how to estimate such preferences. In what follows we describe how we can use the roll call votes in the legislature to estimate these positions.
+
+To summarize, malapportionment influences outcomes by increasing disproportionality across and/or within parties. If parties and individual candidates can be well represented in a (low dimension) ideological space, it is possible to examine the disproportionality of political preferences. This is, essentially, what I will try to do in the remaining of the paper.  
+
+% \cite{Schofield:2008} use a model of electoral choice to estimate the party positions of the American political parties using the estimated policy positions of voters. That is, given the position of the citizens and their voting intentions, together with a model translating preferences to votes, it is possible to infer the positions of the parties using statistical methods. 
+
+% Surveys, however, are expensive and rarely have a large enough sample size that would enable the estimation of this model by district. There's not much one can do when surveys of citizens are simply not available. \comment{Might add: In addition, in some countries (like Brazil) voter recall or intentions are very unreliable, which suggests using actual voting results. Cite literature on vote recall and/or do some simple analysis with survey data.}    
+
+% Suppose instead that we know the ideological positions of the candidates in the election, but not of voters. What can we say about the preferences of the voters? \cite{Kim:2003} combine country level vote share data with estimated party positions using the manifesto data \citep{Budge:2001} to estimate the ideal point of the voters in 25 countries.  By assuming that voters vote for the party closest to their ideal point in a single (left-right) ideological dimension, Kim and Fording are able to estimate the interval in which the median voter is contained. \cite{Honaker:2006} analyze \emph{changes} in vote-shares using the same idea. Unfortunately, since party positions are available only at the country level, these works still assume no intra-party heterogeneity.
+
+% \comment{Maybe cite the brazilian guy from duke paper from PA on using aggregate vote data.}
+
+% If roll call voting records are available, it is possible to estimate the individual positions of legislators using ideal point estimation techniques \citep[e.g.][]{poole:2005}. As long as roll call voting reflect intra-party heterogeneity (i.e. party \emph{discipline} is low) this is a promising way to estimate the preferences within parties. However, we need to estimate the  policy preferences not only of elected but unelected candidates as well. This  creates obvious problems if we rely on roll call votes to estimate the candidates positions. In what follows, I demonstrate that in the very particular case of the Brazilian lower chamber it is possible to provide such estimates. %%I analyze the 2003-2006 legislative session and the 2002 electoral results. I plan to include the period from 1994 until 2006 as this research progresses.
+
+% The strategy I use to deal with these problem is not new. In fact, it widely practiced in representation studies in American politics, especially in the literature on minority representation. What is new is the tailoring of the statistical methods to the characteristics of the Brazilian political system. 
+
+% I will concentrate on two research questions. The first concerns the measurement of the political effects of malapportionment.  The second question is how frequent is split ticket voting in Brazil. 
+
+
+
+
+\section{Estimating Preferences of Legislators and Candidates}
+
+
+To measure the ``political consequences'' of malapportionment, we have to look at what legislators do. Essentially, legislators make \emph{budgetary} decisions (how much to spend and where);  and they make statutory decisions (i.e. they make laws.)\footnote{The actual outcomes in a separation-of-powers system, of course, will depend on the interaction of the decisions in the legislative chamber(s) and the other branches of power (the Judiciary and the Executive.)} My focus in this paper is on the statutory decisions of legislators, which are recorded in their roll call votes. 
+
+Estimating the political consequences of malapportionment requires one to compare the present outcomes of the electoral system with a counterfactual: what would the non-malapportioned legislature do? Thus, we need estimates not only of the preferences of the elected candidates, but also of candidates that would be elected in a correctly apportioned elections.
+
+To that effect, I use  Bayesian ideal point estimation model. I follow the setup and notation of \citet{clinton:2004}.  There are $n$ legislators with preferences that can be represented as points in a one dimensional policy space. We label each legislator $i$'s ideal point as $\theta_i$. Similarly, each roll call decision $j$ that comes up to the floor can also be represented in the space as two points.  : $\zeta_j $ (``yea'')  and $\psi_j$ (``nay''). 
+
+Formally, the legislator will vote ``year'' if $U_i(\zeta_j)-U_i(\psi_j)>0$. With quadratic utilities, and adding a stochastic term to each outcome, the choice specific utilities are $U_{i}(\zeta_j)=-(\theta_i-\zeta_j)^2+\eta_{ij}$,   $U_{i}(\psi_j)=-(\theta_i-\psi_j)^2+\nu_{ij}$. Therefore, legislator $i$ votes ``yea'' in roll call $j$  if $U_i(\zeta_j)-U_i(\psi_j)\equiv \psi^2_j-\zeta^2_j+2\theta_i(\zeta_j-\psi_j)+\eta_{ij}-\nu_{ij}>0$. 
+
+In each roll call $j$, let  $y_{ij}=0$ if legislator $i$ votes ``nay'' and $y_{ij}=1$ if legislator $i$ votes ``yea''. Assuming $E(\nu_{ij})=0$,  $E(\eta_{ij})=0$ and $Var(\nu_{ij}-\eta_{ij})=\sigma^2_j\equiv1$, with $\eta_{ij}$ and $\nu_{ij}$  independent across legislators and roll calls, we have:
+
+\begin{eqnarray}
+P(y_{ij}=1)&=&P(U_i(\zeta_j)-U_i(\psi_j)>0)\\
+&=&P(\nu_{ij}-\eta_{ij}<2\theta_i(\zeta_j-\psi_j)+\psi_j^2-\zeta_j^2)\\
+&=& F(\beta_j \theta_i + \alpha_j)
+\end{eqnarray}
+
+where  $\beta_j=2(\zeta_j-\psi_j)/\sigma_j$  (the direction of the ``yea'' outcome) and $\alpha_j=(\psi_j^2-\zeta_j^2)/\sigma_j$.  In words, the ideal point estimation model is like a probit (if the errors follow a standard normal distribution) or logit (if they have extreme value distributions) where we don't know the $\theta_i$s or the $\alpha_j$ and $\beta_j$s.\footnote{I first heard this analogy from Keith Poole in a panel at the 2001 Midwest Political Science Conference.} This is only possible because: a) we have multiple roll calls, and the $\theta_i$s are assumed to be constant across roll calls;  and b) we assume prior distributions for the unknown parameters. In the canonical ideal point estimation model, these prior have independent normal distributions. 
+
+For our purposes, the difficulty lies in that we don't know have information about the $\theta_i$s of (most of) the unelected candidates, since they did not vote in the legislature\footnote{Roll calls for some of the unelected candidates are available  due to a peculiar feature of the Brazilian political system. When legislators exit either temporarily or permanently  the legislature, replacement deputies (called \emph{suplentes}) are selected from the party list in the order of the (voter defined) electoral list. Given the high rate of legislative exit in Brazil \citep{Samuels:2003} the end result is that we actually observe the roll call behavior of many of the high ranking, but originally unelected, candidates.}. A solution  this problem is to assume that,  instead of  independent normal distributions, legislators are belong to groups: parties and states. We introduce this information formally by assuimg, in place of $\theta_i \sim N(0,.01)$: 
+
+\begin{eqn1}
+  \label{eq:1}
+  \theta_{i} &\sim& N(\alpha^{\mathtt{party}(i)}+\alpha^{\mathtt{state}(i)}, \sigma^{\mathtt{party}(i)}) 
+\end{eqn1}
+
+This allows combining individual level information coming from the roll call votes decisions with the main theories of legislative behavior in Brazil. The party based theory (e.g. \citet{figueiredo:2000}) argues that  knowing the party affiliation of legislators one can predict a large proportion of the votes cast in the chamber.\footnote{Although more recent comparative work does show that voting unity is comparatively lower in Brazilian parties than in other countries\citep{carey:2007}, it is still obviously the case that parties labels are still useful predictors of individual behavior.} Note that in the model the variances are party specific, accomodating the well known fact that parties in Brazil have varying levels of heterogeneity.\citep{figueiredo:1995} 
+
+\citet{abrucio:1998} and \citet{Samuels:2003}, on the other hand, contend that governors and state-level politics significantlty influence national level legislative behavior in Brazil. That is, governors are powerful and provide sticks and carrots to influence legislators from their state. \cite{desposato:2003} does find that parties are more homogenous within than across districts.  The final theory is that legislators exhibit ideological preferences and behavior in Brazil\citep{leoni:2002}. The model I assume for the $\theta_{i}$s is a linear combination of these three influences on roll call behavior: party membership, state origin, and (residual) individual specific preferences.   
+
+The following priors complete the model. 
+
+\begin{eqn1}
+  \alpha^{\mathtt{party}} &\sim& N(\mu_{parties}, \sigma_{parties}) \\
+  \sigma^{\mathtt{party}} & \sim & LogN(\lambda, \upsilon)\\
+  \alpha^{\mathtt{state}} &\sim& N(0, \sigma_{states})  \\
+  \alpha_j & \sim & N(0,10) \\
+  \beta_j & \sim & N(0,10)  \\
+  \lambda & \sim & N(0, 100) \\
+  \upsilon & \sim & U(0,100) \\
+  \mu_{parties} & \sim & N(0,30) \\
+  \sigma_{parties} & \sim & U(0,100) \\
+  \sigma_{states} & \sim & U(0,100)
+\end{eqn1}
+
+That is, ideal points for the legislators have priors that are a combination of (non-nested) state and party effects. The heterogeneity within each party is also modeled using a log normal prior distribution. This structure allows the efficient estimation of the ideal points of legislators who cast just a few roll call votes. It also serves as an imputation model for predicting ideal points of candidates that did not cast roll call votes at all. 
+
+The model is not yet identified: multiplying by a factor or adding a factor to the ideal points would not change the predictions of the model after adjusting the other parameters.\citep{bafumi:2005,rivers:2004} I identify the model by fixing the prior positions of two of the main parties in Brazil. The main left-wing party, the Partido dos Trabalhadores (PT), is set at $-2$. The main right-wing party, the Partido da Frente Liberal (PFL)\footnote{This party is now called Democratas (DEM).}, is set at $+2$. \footnote{These identification restrictions are imposed after the simulations are computed by transforming the output so that the simulated $\alpha^{\mathtt{party_j}}$ for the PT and the DEM equal $-2$ and $2$ respectively at each iteration.\footnote. Post processing the output leads to faster convergence than running the identified model.} In legislative bodies where legislative careers are not long, or when the ideal points of legislators across time are not believed to be stable, identification via priors can be a useful strategy for identification and interpretation of  ideal point models. One can then interpret the distances among the ideal points as \emph{relative} to the distance between two of the main parties in the country.   
+
+This model can be  easily implemented using the bugs language.\footnote{We use the JAGS compiler \citep{plummer:2007}}. \citet{Lewis:2001} proposed a version of this model to estimate preferences of voters using ballot level data. Lewis, however, choose to estimate only the group level coefficients (i.e. means and standard deviations), while here the individual level estimates are also of interest. The model is also described in \cite{bafumi:2005,Gelman:2007}. The main benefit of the multilevel model is allowing the prediction of ``new'' legislators -- i.e. candidates that were not elected to office -- from party and district level  prior distributions, which  are themselves estimated from data.\cite{Gelman:2007} Thus, the model is particularly appropriate to situations where: a) the number of roll calls available for (a subset of) legislators is small; b) there is group level information that is informative about individual ideal points positions. However, since the multilevel model adds significant complexity to the basic item response model, one would like to know if the effort is justified before proceeding. 
+
+%If instead one is interested in a legislature where each member votes hundreds of times each year, the benefits of this approach are not as clear, since we might be imposing unecessary structure on the data. In the 109th United States Senate, for example, the senator that voted least frequently still casted ab average of 90 roll call votes per year. In the Brazilian Congress, in the most recent session (2003-2006), the median number of roll calls was 32 votes. If we include party switching (estimating different positions for each legislator/party combination) and suplentes (substitutes), the median is 23 votes per year.   
+
+\begin{table}[h]
+\input{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/table.tex}
+\label{tab:monte}
+\caption{\emph{Monte Carlo experiments of ideal point estimation models. 50 simulations performed per condition. The data generating process matches the multilevel ideal point model. The number of roll call votes varies across legislators, with a minimum of 25 votes. The main advantage of the multilevel ideal point model are evident. First,  the $\theta_i$ are on average closer to the ``truth''. Second, standard errors are smaller.  They are on average 30\% smaller when the number of roll calls in 30 and 20\% smaller when the number of roll calls is 60.}}
+\end{table}
+
+I performed a small Monte Carlo experiment to answer this question.\footnote{The number of simulations is small since the methods are very computer intensive, and the multilvel model was estimated using a flexible but somewhat inefficient compiler (JAGS).} I estimated the multilevel model using data from the 1995-1998  session of the Câmara and  used the estimated parameter to be the ``true'' model. New data is simulated using these parameters. I compare the performance  of  three estimators: a) the multilevel ideal point model described above; b) a standard Bayesian IRT model \cite{Martin:2007}; and c)  Poole and Rosenthal's W-NOMINATE\citeyear{poole:1997}. Table \ref{tab:monte} reports encouraging results, although the number of simulations so far is limited (50). The multilevel item response model provide more efficient estimates for  $\theta_i$  with slightly better   inference properties (coverage) than the standard Bayesian item response model. As expected, the advantages of the multilevel model declines when the number of roll calls is larger. 
+
+\section{Results}
+
+
+\subsection*{Ideal Point Estimation Model}
+
+Figure \ref{fig:party} displays party locations together with  party specific standard deviations $(\pm\sigma^{\mathtt{party}(i)})$. Compared to the overall distribution of ideal points, we see that party membership can serve as reasonably good predictors of roll call behavior. Even for a small parties, such as PCB and PST, the reduction in uncertainty is substantial, at least when compared to a situation where nothing is known about the candidate/legislator. %%These party positions and standard deviations are the distributions from which we draw the positions for  candidates who did not cast votes in the legislature.  
+
+Figure \ref{fig:state} shows the state level intercepts. Since we assume a  non-nested structure, state level intercepts are shifts on the entire distribution of ideal points for each state. The state level variation ($\sigma_{states}$) is about an order of magnitude smaller than the party level effects ($\sigma_{parties}$), a result which is consistent with recent literature \citep{desposato:2003}. The state effects are in some cases statistically significant, but are small in comparison to the variation across parties. No discernible pattern can be seen in the distribution of  intercepts across the most over-represented states and  the most under-represented state (São Paulo).  
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/party.pdf}  
+  \caption{\emph{Party intercepts for the 12 largest parties. The (prior) positions for PFL and PT are fixed at 2 and $-2$ respectively. We can note both movement and stability. PP, PTB and PL move left in 2003 as they enter the PT's presidential coalition in Congress. The PSDB -- the president's party in 1995-2002 -- is located firmly on the right together with PFL. The error bars capture the within party variation $(\pm\sigma^{\mathtt{party}(i)})$.}}
+\label{fig:party}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/state.pdf}  
+  \caption{\emph{State intercepts for the 8 most over-represented states and the most under-represented (São Paulo). The state level variance is an order of magnitude smaller than the party level variance, thus the small intercepts. No consistent leftist (or rightist) state level influence is observed across the states.}}
+\label{fig:state}
+\end{figure}
+
+\subsection*{Expressed preferences in the electorate}
+
+The parameters displayed in Figures \ref{fig:party} and \ref{fig:state} are used to predict the positions of candidates who did not have roll call votes in the legislature. Once we have estimates of the positions of all candidates (elected and unelected) we can make counterfactual predictions about the policy preferences of the elected chamber given (slight) changes in the electoral rules.\footnote{Recall that we are also estimating many of the ideal points of the candidates not elected outright, since the same list is used for replacing deputies when they permanently or temporarily leave office.} The  impact of malapportionment, for example, is  simply be the estimated difference between the ideal point of the actual median legislator and the median legislator of the hypothetical ``no malapportionment'' chamber.
+
+How would the chamber look like if every single vote was accounted equally? Suppose $s_{ijk}$ is the national share of  electors voting for candidate $i$ from Party $j$ in district $k$.  We approximate  ``perfect representation'' by simulating a chamber with $T$ seats, where $T$ is a very large numberx. There are two cases to consider. 
+
+\begin{enumerate}
+\item Candidate$_{ijk}$ voted in the Chamber. 
+  
+From the ideal point estimation procedure we have the posterior distribution of $\theta_{ijk}$. I simulate new draws from it using a normal distribution with mean $\hat \theta_{ijk}$ and standard deviation $sd(\hat\theta_{ijk})$. $s_{ijk}\times T$ draws from this distribution are needed.
+
+\item Candidate$_{ijk}$ did not vote in the Chamber, or the voter selected a party instead of a candidate. 
+
+We can draw from the prior party distribution instead, $N(\alpha^{\mathtt{party_j}}+\alpha^{\mathtt{state}_k},\sigma^{\mathtt{party}_j})$.  I get $s_{ijk} \times T$ draws from this distribution.
+\end{enumerate}
+
+This procedure produces estimates of the expressed preferences of the voters, ignoring the aggregation rules that translate votes to seats. 
+
+
+\begin{figure}
+  \centering
+  \subfigure[1995-1998 (50th session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateHdi50.pdf}
+  }
+  \hspace{.1in}
+  \subfigure[1995-1998 (50th session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateOver50.pdf}
+  }
+  \subfigure[1999-2002 (51st session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateHdi51.pdf}
+  }
+  \hspace{.1in}
+  \subfigure[1999-2002 (51st session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateOver51.pdf}
+  }
+  \subfigure[2003-2006 (52nd session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateHdi52.pdf}
+  }
+  \hspace{.1in}
+  \subfigure[2003-2006 (52nd session)]{
+    \includegraphics[width=.37\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/medianStateOver52.pdf}
+  }
+  \caption{\emph{Median preference by state and corresponding confidence intervals. On the left panels we see that voters from poor  states voted  more to right wing candidates than voters from richer states in the 1994 and the 1998 elections. The relationship is reversed in 2002, but the coefficient is small and not statistically significant. Over-representation, on the other hand, does not seem to be related to right wing vote (right panels.)}}
+    \label{fig:medians}
+  \end{figure}
+
+I sample  $T$ draws from the distribution above and compare the results to the ideal point distribution of the elected chamber. Estimates of the political effects of malapportionment, with corresponding uncertainty, can be calculated using these two distributions. %%The effect of the chamber size can be estimated by varying $T$.
+
+The left panels in Figure \ref{fig:medians} present the positions of the median voters in each state and the uncertainty surrounding the estimates. In the 1994 and 1998 elections I find that  voters from poor states vote for candidates more to the right than voters from richer states. This result is consistent with the academic literature in Brazil \cite{Desposato:2001} and possibly reflect the clientelistic nature of legislative elections in the Brazilian poorest states. In the elections of 2002, however, when a left-wing President was elected, the relationship is reversed, with voters from poorest states voting for candidates more left wing than voters from richer states. This relationship, however, is not statistically significant. 
+
+In the right panels  I plot the median voter position and the degree of over-representation in each state. It is clear from the panels that the most over-represented states are not consistently different from the rest of the states. For sure, particular states show median voters with left-wing or right-wing proclivities, but by no means they are as a group more (or less) conservative than the states at large.  
+
+Given the results thus far, we are unlikely to find strong effects of malapportionment. Simply put, over-represented states are not outliers in terms of political preferences. The assumptions that these states are poorer and, therefore, more conservative politically is simply false. 
+
+We can provide more direct estimates by comparing quantiles of the distribution of ideal points in the elected chamber to quantiles of the ditribution of ideal points in the population. Three quantiles, or thresholds, are particularly relevant: the median, the 40th centile and the 60th centile. The median is the expected outcomes under  open rule in a one dimensional space when a simple majority is required. The 40th and 60th centiles are the relevant thresholds for constitutional amendments in Brazil. With of the last two thresholds is relevant depend on the location of the status quo. Panel (a) in Figure \ref{fig:thresholds} displays the results.
+
+
+\begin{figure}
+  \centering
+  \centering
+  \subfigure[``Perfect'' representation vs. elected]{
+    \includegraphics[width=.45\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/difall.pdf}
+  }
+  \subfigure[``Perfect'' representation vs. weighted representation]{
+    \includegraphics[width=.45\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/difallW.pdf}
+  }
+  \caption{\emph{Estimated effects of malapportionment, 1995-2002. The estimates in panel (a)  reflect the difference between the elected chamber quantile and the voters'expressed preferences. The  effects are relatively small: less than 10\% of the difference between the parties (PT and PFL) anchoring the ideal point estimation. In panel (b) is displayed the difference between ``perfect representation'' (counting each vote equally, with unlimited seats) and ``weighted representation'' (votes are weighted by the degree of over-representation, also with unlimited seats)}}
+  \label{fig:thresholds}
+\end{figure}
+ 
+In the 1995-1998 and 1999-2002 legislative sessions there is a significant difference between the median voter in the electorate and the median voter in the chamber. In all three thresholds, the quantile in the chamber is to the right of the quantile among voters. Although statistically significant (the confidence intervals do not overlap zero) the estimated effects are quite small. The highest estimated effect (about $0.3$) is for the  40th centile in the 1999-2002 session. To put it into perspective, even this estimate is less than 10 percent of the distance between the two parties that anchor the space, the PT and the PFL. In the 1995-1998 session the effects are less than half that size, while the direction is reversed (and the effects even smaller) for the latest session.
+
+Even though the effects are small, it is important to understand what mechanism produces the (statistically significant) bias in representation. Is it the different voting weights across districts -- i.e. the fact that a vote in Roraima ``buys'' 15 times more seats than a vote in São Paulo -- or the variation in the number seats across districts -- the fact that Roraima has 8 seats while São Paulo has 70 -- that produces bias in representation?
+
+We can answer this question by looking at panel (b) of Figure \ref{fig:thresholds}. The effects of malapportionment in this case are extremely small. What this tells us is that it is \emph{not} the degree of over-representation of the small states the main driver of the effects seen in panel (a), but the lack of coordination and the necessarily limited number of seats in each district. To put it another way, the effects of malapportionment are amplified by the variation of magnitude across districts\citep{monroe:2002}.
+
+\section{Preliminary Conclusions}
+
+This paper makes two distinct contributions. First, it provides an assessment of the impact of malapportionment on legislative decisions in Brazil. Contrary to conventional wisdom from academics and pundits, the impact of malapportionment is quite small. The main message is that we need  estimates of  political preferences if we want to gauge the effect of institutions on behavior. Political outcomes, afterall, reflect the \emph{interaction} between preferences and instittions. 
+
+The second contribution is methodological.  I propose a multilevel ideal point estimation model to estimate the political preferences of legislators. The Monte Carlo evidence suggests that this model is a significant improvement over the alternative methods of ideal point estimation when the number of roll call votes available is limited. The next step in this research agenda is to model preference change across time\citep{martin:2002}.
+   
+
+
+
+
+
+
+ 
+  
+
+
+
+
+
+% \begin{figure}
+%   \centering
+%     \subfigure[1995-1998 (50th session)]{
+%       \includegraphics[width=.45\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/densities50.pdf}
+%     }
+%     \hspace{.3in}
+%     \subfigure[1999-2002 (51st session)]{
+%       \includegraphics[width=.45\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/densities51.pdf}
+%     }
+%     \subfigure[2003-2006 (52nd session)]{
+%       \includegraphics[width=.45\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/densities52.pdf}
+%     }
+%     \hspace{.3in}    
+% %     \subfigure[b]{
+% %       \includegraphics[width=.43\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/mapC.pdf}
+% %     }
+%     \caption{\emph{Densities of the ``perfect representation'' estimate and the ideal point distribution of the elected Câmara for the three last sessions of the Brazilian Câmara dos Deputados. To account for measurement error I calculated the densities using 60 samples from the posterior distributions.  The quantity of interest for each panel is the difference between the two distributions. Unfortunately, the usual difficulties in perceiving vertical distances in graphs \citep{Cleveland:1993},  compounded with measurement error makes it difficult to interpret the graphs.}}
+%     \label{fig:densities}
+%   \end{figure}
+
+% We first compare two hypothetical chambers: the perfect representation chamber, described above; and a ``weighted representation'' chamber,  in which votes are weighted by the degree of over-representation in the district. A voter in the state of Roraima in 1994, for example, is weighted  15 times more than the voter in São Paulo. 
+
+
+% The densities of the two distributions -- the ``perfect'' representation  and the distribution of the ideal points of the elected candidates -- are displayed in Figure \ref{fig:densities}. To take  measurement error into account  I use 60 draws from each posterior distribution and calculate separately the kernel density estimates, overlaying the results.     
+
+
+
+
+%%Malapportionment can affect political outcomes in mainly two ways. By over-representing particular parties in the legislature (i.e. by increasing disproportionality); or by over-representing within parties candidates that have different preferences from the party members in the country at large. Disproportionality, however, is influenced by  other factors, such as lack of district magnitude and lack of coordination among voters.\citep{cox:1991,cox:1997} And looking at disproportionality across parties ignores the heterogeneity within parties that might exist.
+  
+  
+
+
+
+% \begin{figure}
+%   \centering
+%   \subfigure[1995-1998 (50th session)]{
+%     \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectActual50.pdf}
+%   }
+%   \hspace{.1in}
+%   \subfigure[1995-1998 (50th session)]{
+%     \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectWeighted50.pdf}
+%     }
+%     \subfigure[1999-2002 (51st session)]{
+%       \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectActual51.pdf}
+%     }
+%     \hspace{.1in}
+%     \subfigure[1999-2002 (51st session)]{
+%       \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectWeighted51.pdf}
+%     }
+%     \subfigure[2003-2006 (52nd session)]{
+%       \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectActual52.pdf}
+%     }
+%     \hspace{.1in}
+%     \subfigure[2003-2006 (52nd session)]{
+%       \includegraphics[width=.33\textwidth]{/Users/eduardo/projects/BrazilianPolitics/trunk/dissertation/hip/malapportionment/relPerfectWeighted52.pdf}
+%     }
+%      \caption{\emph{Over-representation and ideology. In the left panels I compare the expressed preferences by voters and those represented in the Câmara. Right wing candidates are over-represented  in 1994 and 1998, but the  pattern is reversed in 2002. Similarly, the elected median is to the right of the median voter in 1994 and 1998 but slightly to the left in 2002. On the right panels I compare the preferences of voters to the weighted  preference of voters, with weights given by the over/under representation of each state. There is much less divergence in this comparison, which implies that malapportionment is not the main driver of disproportionality.}}
+%     \label{fig:densities}
+%   \end{figure}
+  
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "thesis_article"
+%%% End: 
+
+% LocalWords:  Intra powell kim disproportionality OL

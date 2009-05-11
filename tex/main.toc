@@ -1,0 +1,13 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {part}{I\hspace {1em}The Statistical Analysis of Electoral Coalitions}{2}{part.1}
+\contentsline {section}{\numberline {1.1}Electoral coalitions in Brazil}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}On ideology and its measurement}{7}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}State level preferences}{13}{subsection.1.2.1}
+\contentsline {section}{\numberline {1.3}A statistical model of electoral coalition formation}{14}{section.1.3}
+\contentsline {section}{\numberline {1.4}Estimation}{16}{section.1.4}
+\contentsline {section}{\numberline {1.5}Data issues and preliminary results}{18}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Data issues}{18}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}Preliminary results}{19}{subsection.1.5.2}
+\contentsline {section}{\numberline {1.6}Project outlook}{22}{section.1.6}
+\contentsline {part}{II\hspace {1em}Bibliography}{25}{part.2}
+\contentsline {chapter}{Bibliography}{26}{section*.4}

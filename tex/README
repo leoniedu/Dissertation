@@ -1,0 +1,4 @@
+LaTeX template files for the PhD thesis format required by Columbia.
+Created by Agustin Gravano from original files by Panagiotis Ipeirotis.
+On Unix-like systems, run `make' to create a DVI file, or `make pdf' 
+to create a PDF file. Good luck!
